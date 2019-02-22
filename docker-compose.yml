@@ -1,0 +1,40 @@
+version: '3.1'
+services:
+##############################################################
+# jobhunt
+##############################################################
+  jobhunt:
+    tty: true
+    stdin_open: true
+    container_name: jobhunt
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: rails s -b0.0.0.0
+    volumes:
+      - .:/app
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres_jobhunt
+    environment:
+      SECRET_KEY_BASE: de32c87d749c65606da1c25b21a94601879e9af6763457aba52c72a9301c1e32dd991e9a3878649d333fbd60148f75bf275fe88c70c46db20e8483715fbf0c21
+      RAILS_ENV: production
+      DB_HOST: postgres_jobhunt
+      ANGEL_KEY: 000000
+
+##############################################################
+# db
+#####################r#########################################
+  postgres_jobhunt:
+    container_name: postgres_jobhunt
+    image: 'postgres:10.3-alpine'
+    volumes:
+      - 'postgres:/var/lib/postgresql/data'
+    environment:
+      POSTGRES_PASSWORD: postgres
+##############################################################
+# volumes
+#####################r#########################################
+volumes:
+  postgres:

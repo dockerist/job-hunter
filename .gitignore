@@ -19,5 +19,4 @@
 /.byebug_history
 /env.data
 /.env
-/config/database.yml
 /public/system/users
